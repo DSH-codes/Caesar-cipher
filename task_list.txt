@@ -6,3 +6,11 @@
 * Basic windows
 
 * Wide - short window?
+
+* Validation for the top entry
+
+* Background vector pic
+
+* 0.2 when basic UI is ready
+
+*
