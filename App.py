@@ -1,5 +1,6 @@
 
 import customtkinter as ui
+import functions
 
 
 
@@ -14,7 +15,7 @@ class App(ui.CTk):
         super().__init__()
         self.geometry(geometry)
         self.resizable(True, True)
-        self.title(f"{' ' * 42}CaesarCipher 0.1")
+        self.title(f"{' ' * 42}CaesarCipher 0.2")
 
         self.entry = ui.CTkEntry(self)
         self.entry.pack(pady = 30)
@@ -40,10 +41,8 @@ class App(ui.CTk):
         self.help = ui.CTkButton(self.frame_, text="Help")
         self.help.grid(row = 2, column = 0, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.clear_window = ui.CTkButton(self.frame_, text="Clear")
+        self.clear_window = ui.CTkButton(self.frame_, text="Clear", command = lambda: functions.cleaner(self.window))
         self.clear_window.grid(row = 2, column = 1, pady = self.button_padding_y, padx=self.button_padding_x)
-
-
 
 
 

@@ -3,14 +3,14 @@
 
 
 
-* Basic windows
+* Basic windows ✓
 
-* Wide - short window?
+* Wide - short window? ✓
 
 * Validation for the top entry
 
 * Background vector pic
 
-* 0.2 when basic UI is ready
+* 0.2 when basic UI is ready ✓
 
 *
