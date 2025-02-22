@@ -1,8 +1,11 @@
 
 import customtkinter as ui
+
+import string as st
+
 import functions
 
-
+# ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 
 class App(ui.CTk):
@@ -43,6 +46,8 @@ class App(ui.CTk):
 
         self.clear_window = ui.CTkButton(self.frame_, text="Clear", command = lambda: functions.cleaner(self.window))
         self.clear_window.grid(row = 2, column = 1, pady = self.button_padding_y, padx=self.button_padding_x)
+
+
 
 
 
