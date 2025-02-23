@@ -14,3 +14,15 @@
 * 0.2 when basic UI is ready ✓
 
 *
+
+
+
+
+
+
+
+
+
+NOTES:
+
+message = "".join([(ab if i.islower() else bb)[(ab if i.islower() else bb).index(i) + shift] if i != " " and i in (ab if i.islower() else bb) else i for i in message])

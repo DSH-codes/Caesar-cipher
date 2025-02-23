@@ -9,22 +9,47 @@ def cleaner(widget: ct.CTkTextbox):
     widget.delete(0.0, ct.END)
 
 
-def encode(string, shift = 1):
-    """Encodes a message/string using the Caesar's
-    cipher
+def encode(message: str, shift = 1) -> str:
+    """
+    Encodes a message/string using the Caesar's
+    cipher.
 
-    Args:
-        string: a string to be encoded
-        shift: an integer to define the shift
+    Parameters:
+        message(str): a string to be encoded
+        shift(int): a shift of alphabet
 
+    Returns:
+        str: encoded message as a string value
+
+    Examples:
+        > encode("Hello", 3)
+
+        > encode("London", 4)
+
+        > encode("Hello world!", 2)
     """
 
-    alphabet = [i for i in st.ascii_lowercase]
-
-    return "".join([alphabet[alphabet.index(i) + shift] if i != " " else i for i in string])
 
 
-print(help(encode))
+    ab = [i for i in st.ascii_lowercase]  # stands for alphabet, content = lowercase english alphabet
+    abu = [i for i in st.ascii_uppercase]  # the same as above but uppercase
+
+
+
+
+    converted = [ab[ab.index(i) + shift] if i in ab and i != " " else i for i in message.lower()]
+    converted = "".join(converted)
+
+    return converted
+
+
+print(encode("aaa!", 2))
+
+
+
+
+
+
 
 
 
