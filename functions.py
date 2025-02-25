@@ -36,14 +36,14 @@ def encode(message: str, shift = 1) -> str:
 
 
 
-
-    converted = [ab[ab.index(i) + shift] if i in ab and i != " " else i for i in message.lower()]
+    # the formula is: (alphabet.index(char) + shift) % len(alphabet)
+    converted = [ab[(ab.index(i) + shift) % len(ab)] if i in ab and i != " " else i for i in message.lower()]
     converted = "".join(converted)
 
     return converted
 
 
-print(encode("aaa!", 2))
+print(encode("zzz!", 2))
 
 
 
