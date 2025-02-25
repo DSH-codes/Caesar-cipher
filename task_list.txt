@@ -25,4 +25,4 @@
 
 NOTES:
 
-message = "".join([(ab if i.islower() else bb)[(ab if i.islower() else bb).index(i) + shift] if i != " " and i in (ab if i.islower() else bb) else i for i in message])
+# ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
