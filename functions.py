@@ -6,18 +6,18 @@ import string as st
 
 
 
-def cleaner(widget: ct.CTkTextbox) -> None:
-    """Deletes content of the Textbox widget
+def cleaner(*widgets: ct.CTkTextbox) -> None:
+    """Deletes content of the Textbox widgets
 
     Parameters:
-        widget(CTk.Textbox)
+        widgets(CTk.Textbox)
 
     """
+    for widget in widgets:
+        widget.delete(0.0, "end")
 
-    widget.delete(0.0, ct.END)
 
-
-def encode(message: str, shift = 1) -> str:
+def encoding(message: str, shift = 1) -> str:
     """
     Encodes a message/string using the Caesar's
     cipher.
@@ -30,13 +30,13 @@ def encode(message: str, shift = 1) -> str:
         converted(str): encoded message as a string value
 
     Examples:
-        >>> encode("Hello", 3)
+        >>> encoding("Hello", 3)
         'Khoor'
-        >>> encode("London", 4)
+        >>> encoding("London", 4)
         'Psrhsr'
-        >>> encode("Hello world!", 2)
+        >>> encoding("Hello world!", 2)
         'Jgnnq yqtnf!'
-        >>> encode("I am 25 years old", 2)
+        >>> encoding("I am 25 years old", 2)
         'K co 25 agctu qnf'
 
     """
@@ -54,10 +54,25 @@ def encode(message: str, shift = 1) -> str:
 
 
     #            --------------------------    -------------------------                                        -------------------------
-    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in (al if i.islower() else au) and i != " " else i for i in message]
+    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in (al if i.islower() else au) and i != " " and i != "\n" else i for i in message]
     converted = "".join(converted)
 
     return converted
 
 
+def encode_text(widget: ct.CTkTextbox, encoder_, send = 0):
+
+    text = widget.get(0.0, ct.END).split()
+    #print(text)
+
+    text = [encoder_(i) for i in text]
+
+    # if send != 0:
+    #     send.configure(state = "normal")
+    #     send.insert(0.0, text)
+    #     send.configure(state="disabled")
+
+
+    print(text)
+    #return text
 

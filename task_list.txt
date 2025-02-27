@@ -13,7 +13,9 @@
 
 * 0.2 when basic UI is ready ✓
 
-*
+* Second text window for encoding
+
+* Adjust cleaner function
 
 
 
