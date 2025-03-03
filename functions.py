@@ -3,18 +3,53 @@ import customtkinter as ct
 
 import string as st
 
+from pprint import pprint
 
 
 
-def cleaner(*widgets: ct.CTkTextbox) -> None:
+
+
+
+def clean(*widgets: ct.CTkTextbox) -> None:
     """Deletes content of the Textbox widgets
 
     Parameters:
         widgets(CTk.Textbox)
-
     """
-    for widget in widgets:
-        widget.delete(0.0, "end")
+
+    # Just clears the first textbox
+    # Then do the same for the second one
+
+    widgets[0].delete(0.0, "end")
+
+    # Doing it this way, because ->
+    # if widget["state"] = "disabled"
+    # <- is not available
+
+    widgets[1].configure(state = "normal")
+    widgets[1].delete(0.0, "end")
+    widgets[1].configure(state = "disabled")
+
+
+def encode_text(widget: ct.CTkTextbox, encoder_, send = 0):
+
+    text = widget.get(0.0, ct.END).split()
+
+
+    text = [encoder_(i) for i in text]
+
+    if send != 0:
+        send.configure(state = "normal")
+        send.insert(0.0, text)
+        send.configure(state="disabled")
+
+
+    print(text)
+
+
+
+
+# ---------------------------------------------RETURNING FUNCTIONS SECTIONS--------------------------------------------
 
 
 def encoding(message: str, shift = 1) -> str:
@@ -54,25 +89,8 @@ def encoding(message: str, shift = 1) -> str:
 
 
     #            --------------------------    -------------------------                                        -------------------------
-    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in (al if i.islower() else au) and i != " " and i != "\n" else i for i in message]
+    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in
+        (al if i.islower() else au) and i != " " and i != "\n" else i for i in message]
     converted = "".join(converted)
 
     return converted
-
-
-def encode_text(widget: ct.CTkTextbox, encoder_, send = 0):
-
-    text = widget.get(0.0, ct.END).split()
-    #print(text)
-
-    text = [encoder_(i) for i in text]
-
-    # if send != 0:
-    #     send.configure(state = "normal")
-    #     send.insert(0.0, text)
-    #     send.configure(state="disabled")
-
-
-    print(text)
-    #return text
-

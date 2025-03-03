@@ -44,8 +44,9 @@ class App(ui.CTk):
         self.help = ui.CTkButton(self.frame_, text="Help")
         self.help.grid(row=2, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.clear_window = ui.CTkButton(self.frame_, text="Clear", command=lambda: functions.cleaner(self.original_text, self.encoded_text))
+        self.clear_window = ui.CTkButton(self.frame_, text="Clear", command=lambda: functions.clean(self.original_text, self.encoded_text))
         self.clear_window.grid(row=2, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
+
 
 
 if __name__ == "__main__":
