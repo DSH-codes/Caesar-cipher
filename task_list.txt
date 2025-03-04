@@ -7,7 +7,7 @@
 
 * Wide - short window? ✓
 
-* Validation for the top entry
+* Validation for the top entry ✓
 
 * Background vector pic
 

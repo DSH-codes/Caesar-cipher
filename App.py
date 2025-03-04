@@ -4,6 +4,7 @@ import customtkinter as ui
 import functions as fcs
 
 
+# Giving the command value, to widgets, trough configure, is done for readability
 
 
 
@@ -16,8 +17,9 @@ class App(ui.CTk):
         self.geometry(geometry)
         self.resizable(True, True)
         self.title(f"{' ' * 42}CaesarCipher 0.2")
+        self.validation_ = (self.register(fcs.valid_digit), "%P")
 
-        self.entry = ui.CTkEntry(self)
+        self.entry = ui.CTkEntry(self, validate = "key", validatecommand = self.validation_)
         self.entry.pack(pady=30)
 
         self.original_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15)

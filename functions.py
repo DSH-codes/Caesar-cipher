@@ -133,3 +133,18 @@ def convert_lines(from_widget: ct.CTkTextbox, encoding_function: Callable, shift
     text = [encoding_function(i, shift_) for i in text]
 
     return "".join(text)
+
+
+def valid_digit(x: str):
+
+    """This function is for validation
+    that only digits or empty string is
+    in an entry
+
+    Parameters:
+        x(str): a value to be checked == %P
+    """
+
+    if x.isdigit() or x == "":
+        return True
+    return False
