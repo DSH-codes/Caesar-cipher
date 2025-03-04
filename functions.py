@@ -5,6 +5,10 @@ import string as st
 
 from typing import Callable, Union
 
+from tkinter import filedialog as fd
+
+
+
 
 # ---------------------------------------------WIDGETS OPERATING SECTION------------------------------------------------
 
@@ -148,3 +152,24 @@ def valid_digit(x: str):
     if x.isdigit() or x == "":
         return True
     return False
+
+
+def import_text() -> str:
+    """Gets a text file, to import
+    some text from it.
+
+    Returns:
+        content(str): the extracted text
+    """
+
+    where = fd.askopenfilename()
+
+    if not where:
+        return
+
+    with open(where, "r") as file:
+        content = file.read()
+
+    return content
+
+

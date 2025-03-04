@@ -32,6 +32,7 @@ class App(ui.CTk):
         self.frame_.pack()
 
         self.import_ = ui.CTkButton(self.frame_, text="Import")
+        self.import_.configure(command=fcs.import_text)
         self.import_.grid(row=0, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.encode_ = ui.CTkButton(self.frame_, text="Encode")
