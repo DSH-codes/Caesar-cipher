@@ -19,7 +19,7 @@
 
 * New line problem ✓
 
-* test ignore
+* test ignore ✓
 
 
 
