@@ -1,7 +1,7 @@
 
 import customtkinter as ui
 
-import functions
+import functions as fcs
 
 
 
@@ -20,11 +20,11 @@ class App(ui.CTk):
         self.entry = ui.CTkEntry(self)
         self.entry.pack(pady=30)
 
-        self.original_text = ui.CTkTextbox(self, width=350, height=180, corner_radius=15)
-        self.original_text.pack(pady = 1)
+        self.original_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15)
+        self.original_textbox.pack(pady = 1)
 
-        self.encoded_text = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, state = "disabled")
-        self.encoded_text.pack(pady = 1)
+        self.encoded_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, state ="disabled")
+        self.encoded_textbox.pack(pady = 1)
 
         self.frame_ = ui.CTkFrame(self, fg_color=self.cget("fg_color"), height=150, width=350)
         self.frame_.pack()
@@ -32,7 +32,9 @@ class App(ui.CTk):
         self.import_ = ui.CTkButton(self.frame_, text="Import")
         self.import_.grid(row=0, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.encode_ = ui.CTkButton(self.frame_, text="Encode", command = lambda: functions.encode_text(self.original_text, functions.encoding, self.encoded_text))
+        self.encode_ = ui.CTkButton(self.frame_, text="Encode")
+        args = (self.original_textbox, self.entry, fcs.encoder, fcs.convert_lines, self.encoded_textbox)
+        self.encode_.configure(command = lambda: fcs.show_secret(*args))
         self.encode_.grid(row=0, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.save_as = ui.CTkButton(self.frame_, text="Save as")
@@ -41,10 +43,11 @@ class App(ui.CTk):
         self.decode = ui.CTkButton(self.frame_, text="Decode")
         self.decode.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.help = ui.CTkButton(self.frame_, text="Help")
+        self.help = ui.CTkButton(self.frame_, text="Help", command = None)
         self.help.grid(row=2, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.clear_window = ui.CTkButton(self.frame_, text="Clear", command=lambda: functions.clean(self.original_text, self.encoded_text))
+        self.clear_window = ui.CTkButton(self.frame_, text="Clear")
+        self.clear_window.configure(command=lambda: fcs.clear(self.original_textbox, self.encoded_textbox))
         self.clear_window.grid(row=2, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
 
 

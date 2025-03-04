@@ -15,9 +15,9 @@
 
 * Second text window for encoding ✓
 
-* Adjust cleaner function
+* Adjust cleaner function ✓
 
-* New line problem
+* New line problem ✓
 
 
 

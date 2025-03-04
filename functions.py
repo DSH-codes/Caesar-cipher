@@ -3,18 +3,17 @@ import customtkinter as ct
 
 import string as st
 
-from pprint import pprint
+from typing import Callable, Union
 
 
+# ---------------------------------------------WIDGETS OPERATING SECTION------------------------------------------------
 
-
-
-
-def clean(*widgets: ct.CTkTextbox) -> None:
+def clear(*widgets: ct.CTkTextbox) -> None:
     """Deletes content of the Textbox widgets
 
     Parameters:
-        widgets(CTk.Textbox)
+        widgets(CTk.Textbox): a Textbox widget
+        to be cleared
     """
 
     # Just clears the first textbox
@@ -31,28 +30,44 @@ def clean(*widgets: ct.CTkTextbox) -> None:
     widgets[1].configure(state = "disabled")
 
 
-def encode_text(widget: ct.CTkTextbox, encoder_, send = 0):
+def show_secret(*args: Union[ct.CTkTextbox, ct.CTkEntry, Callable, Callable, ct.CTkTextbox]) -> None:
+    """
+    Takes a message from a textbox, encodes it
+    and inserts it into another textbox
 
-    text = widget.get(0.0, ct.END).split()
-
-
-    text = [encoder_(i) for i in text]
-
-    if send != 0:
-        send.configure(state = "normal")
-        send.insert(0.0, text)
-        send.configure(state="disabled")
-
-
-    print(text)
+    Parameters:
+        args[0]: a textbox widget to get a text from
+        args[1]: an entry widget to get a shift from
+        args[2]: a word encoding function to encrypt words using the given shift
+        args[3]: a function to apply the word encoding func to every word in the text, and an give encrypted text
+        args[4]: a textbox widget into which, encrypted text will be inserted
 
 
+    What is going on here:
+
+        This SHOW_SECRET function, takes a text from args[0] which is a Textbox widget.
+        Then takes value from args[1] which an Entry widget and coverts it into int, it will be the shift value
+        Then calls args[3] CONVERT_LINES function, passing to it args[2] ENCODER function along with the shift
+        value and assigning the call to ENCRYPTED_MESSAGE variable
+        Then ENCRYPTED_MESSAGE is inserted into args[4] which is a Textbox widget
+    """
+
+    shift = args[1].get()
+    shift = int(shift) if shift else 1          # default is 1, if args[1].get() == " "
+
+    encrypted_message = args[3](args[0], args[2], shift)
+
+    target_widget = args[4]
+
+    target_widget.configure(state = "normal")
+    target_widget.delete(0.0, "end")            # delete the previous text, to avoid repetitive insertions
+    target_widget.insert(0.0, encrypted_message)
+    target_widget.configure(state = "disabled")
 
 
-# ---------------------------------------------RETURNING FUNCTIONS SECTIONS--------------------------------------------
+# ---------------------------------------------RETURNING FUNCTIONS SECTIONS---------------------------------------------
 
-
-def encoding(message: str, shift = 1) -> str:
+def encoder(message: str, shift) -> str:
     """
     Encodes a message/string using the Caesar's
     cipher.
@@ -65,13 +80,13 @@ def encoding(message: str, shift = 1) -> str:
         converted(str): encoded message as a string value
 
     Examples:
-        >>> encoding("Hello", 3)
+        >>> encoder("Hello", 3)
         'Khoor'
-        >>> encoding("London", 4)
+        >>> encoder("London", 4)
         'Psrhsr'
-        >>> encoding("Hello world!", 2)
+        >>> encoder("Hello world!", 2)
         'Jgnnq yqtnf!'
-        >>> encoding("I am 25 years old", 2)
+        >>> encoder("I am 25 years old", 2)
         'K co 25 agctu qnf'
 
     """
@@ -89,8 +104,32 @@ def encoding(message: str, shift = 1) -> str:
 
 
     #            --------------------------    -------------------------                                        -------------------------
-    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in
-        (al if i.islower() else au) and i != " " and i != "\n" else i for i in message]
+    # converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in (al if i.islower() else au) and i != " " and i != "\n" else i for i in message]
+    converted = [(al if i.islower() else au)[((al if i.islower() else au).index(i) + shift) % len(al)] if i in (al if i.islower() else au) and i != " " else i for i in message]
     converted = "".join(converted)
 
     return converted
+
+
+def convert_lines(from_widget: ct.CTkTextbox, encoding_function: Callable, shift_: int) -> str:
+    """
+    Takes a text from a widget, encodes it, by a
+    given encoder function, and returns an encoded
+    text
+
+    Parameters:
+        from_widget(str): a widget to get a text from
+        encoding_function(function): a function to encode the text
+        shift_(int): a value for shifting, to be given to encoding function
+
+    Returns:
+        text(str): the encoded text
+
+    """
+
+
+    text = from_widget.get(0.0, ct.END).splitlines(1)
+
+    text = [encoding_function(i, shift_) for i in text]
+
+    return "".join(text)
