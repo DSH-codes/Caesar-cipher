@@ -23,7 +23,7 @@
 
 * Backward shift?
 
-
+* Reset all widget functions into the class?
 
 
 

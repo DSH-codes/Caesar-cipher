@@ -12,6 +12,7 @@ class App(ui.CTk):
     button_padding_y = 10  # vertical
     button_padding_x = 15  # horizontal
 
+
     def __init__(self, geometry="400x600"):
         super().__init__()
         self.geometry(geometry)
@@ -32,7 +33,7 @@ class App(ui.CTk):
         self.frame_.pack()
 
         self.import_ = ui.CTkButton(self.frame_, text="Import")
-        self.import_.configure(command=fcs.import_text)
+        self.import_.configure(command=lambda: fcs.insert_imported_text(self.original_textbox, fcs.import_text, fcs.clear, self.original_textbox, self.encoded_textbox))
         self.import_.grid(row=0, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.encode_ = ui.CTkButton(self.frame_, text="Encode")
@@ -50,8 +51,25 @@ class App(ui.CTk):
         self.help.grid(row=2, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.clear_window = ui.CTkButton(self.frame_, text="Clear")
-        self.clear_window.configure(command=lambda: fcs.clear(self.original_textbox, self.encoded_textbox))
+        self.clear_window.configure(command=self.clear_textboxes)
         self.clear_window.grid(row=2, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
+
+    def clear_textboxes(self):
+
+        """Clears the two text boxes"""
+
+        # Just clears the first textbox
+        # Then do the same for the second one
+
+        self.original_textbox.delete(0.0, "end")
+
+        # Doing it this way, because ->
+        # if widget["state"] = "disabled"
+        # <- is not available
+
+        self.encoded_textbox.configure(state = "normal")
+        self.encoded_textbox.delete(0.0, "end")
+        self.encoded_textbox.configure(state = "disabled")
 
 
 

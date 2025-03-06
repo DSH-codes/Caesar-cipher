@@ -8,8 +8,6 @@ from typing import Callable, Union
 from tkinter import filedialog as fd
 
 
-
-
 # ---------------------------------------------WIDGETS OPERATING SECTION------------------------------------------------
 
 def clear(*widgets: ct.CTkTextbox) -> None:
@@ -69,7 +67,17 @@ def show_secret(*args: Union[ct.CTkTextbox, ct.CTkEntry, Callable, Callable, ct.
     target_widget.configure(state = "disabled")
 
 
+def insert_imported_text(to_where: ct.CTkTextbox, importing_function, clearing_function, *clear_them):
+
+    clearing_function(*clear_them)
+
+    text = importing_function()
+
+    to_where.insert(0.0, text)
+
+
 # ---------------------------------------------RETURNING FUNCTIONS SECTIONS---------------------------------------------
+
 
 def encoder(message: str, shift) -> str:
     """
@@ -171,5 +179,7 @@ def import_text() -> str:
         content = file.read()
 
     return content
+
+
 
 
