@@ -1,4 +1,4 @@
 
 # Caesar-cipher
 
-Mini-app for encoding messages using the Caesar's ciphering 
+Pet-project: Mini-app for encoding messages using the Caesar's ciphering 
