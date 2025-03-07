@@ -8,7 +8,7 @@ from typing import Callable, Union
 from tkinter import filedialog as fd
 
 
-# ---------------------------------------ONLY RETURNING FUNCTIONS SECTIONS HERE-----------------------------------------
+# --------------------------------------------ONLY RETURNING FUNCTIONS HERE--------------------------------------------
 
 
 def encoder(message: str, shift) -> str:

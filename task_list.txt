@@ -27,9 +27,19 @@
 
 * Decode?
 
-* Save as
+* Save as ✓
 
 * Abort text importing error ✓
+
+* Help button
+
+* Help button's position
+
+* Calculate the main window's position
+
+* Formula of the window's positioning
+
+
 
 
 

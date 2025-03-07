@@ -15,17 +15,34 @@ from tkinter import filedialog as fd
 
 
 
+class HelpWindow(ui.CTkToplevel):
+    def __init__(self, lc_horizontal, lc_vertical):
+        super().__init__()
+        self.title("How to use")
+        self.geometry(f"400x600+{lc_horizontal+400}+{lc_vertical}")
+        # set the help window, right the next to the main window
+
+        self.info_label_ = ui.CTkLabel(self, text = "Hello")
+        self.info_label_.pack()
+
+
+
+
 class App(ui.CTk):
     button_padding_y = 10  # vertical
     button_padding_x = 15  # horizontal
 
 
-    def __init__(self, geometry="400x600"):
+    def __init__(self):
         super().__init__()
-        self.geometry(geometry)
+        self.geometry("400x600")
         self.resizable(True, True)
         self.title(f"{' ' * 42}CaesarCipher 0.2")
         self.validation_ = (self.register(fcs.valid_digit), "%P")
+        self.central_position()
+
+        self.position_vertical = 0
+        self.position_horizontal = 0
 
         self.entry = ui.CTkEntry(self, validate = "key", validatecommand = self.validation_)
         self.entry.pack(pady=30)
@@ -54,12 +71,17 @@ class App(ui.CTk):
         self.decode = ui.CTkButton(self.frame_, text="Decode")
         self.decode.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.help = ui.CTkButton(self.frame_, text="Help", command = None)
+        self.help = ui.CTkButton(self.frame_, text="Help", command = self._show_help)
         self.help.grid(row=2, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.clear_window = ui.CTkButton(self.frame_, text="Clear")
         self.clear_window.configure(command=self._clear_textboxes)
         self.clear_window.grid(row=2, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
+
+        self.help_window: None | ui.CTkToplevel = None
+
+        # self.optimal_position()
+
 
     def _encode_and_show(self):
         """Gets a text from the upper textbox
@@ -135,6 +157,55 @@ class App(ui.CTk):
             file.write(original_message)
             file.write(f"\n{('-' * 45)}\n\n")
             file.write(encoded_message)
+
+    def _show_help(self):
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        width = self.winfo_width()
+        height = self.winfo_height()
+
+        location_horizontal = (screen_width - width) // 2
+        location_vertical = (screen_height - height) // 2
+
+
+        if self.help_window is None or not self.help_window.winfo_exists():
+            self.help_window = HelpWindow(location_horizontal, location_vertical)
+            self.help_window.focus()
+        else:
+            self.help_window.focus()
+
+    def central_position(self):
+        """Calculates the main window's dimension and
+        then places it precisely into the middle
+        of the screen"""
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        width = self.winfo_width()
+        height = self.winfo_height()
+
+        location_horizontal = (screen_width - width) // 2
+        location_vertical = (screen_height - height) // 2
+
+
+        pos = f"{width}x{height}+{location_horizontal}+{location_vertical}"
+
+        self.geometry(pos)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
