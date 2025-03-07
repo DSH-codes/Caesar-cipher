@@ -23,7 +23,13 @@
 
 * Backward shift?
 
-* Reset all widget functions into the class?
+* Reset all widget functions into the class? ✓
+
+* Decode?
+
+* Save as
+
+* Abort text importing error
 
 
 
