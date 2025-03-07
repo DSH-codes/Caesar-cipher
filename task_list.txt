@@ -31,7 +31,7 @@
 
 * Abort text importing error ✓
 
-* Help button
+* Help button ✓
 
 * Help button's position ✓
 

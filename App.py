@@ -4,6 +4,8 @@ import customtkinter as ui
 
 import functions as fcs
 
+import webbrowser
+
 import time as tm
 
 from tkinter import filedialog as fd
@@ -24,16 +26,31 @@ class HelpWindow(ui.CTkToplevel):
         self.geometry(f"400x600+{lc_horizontal+400}+{lc_vertical}")
         # set the help window, right the next to the main window
 
-        self.info_label_ = ui.CTkLabel(self, text = "Hello")
-        self.info_label_.pack(pady = 10)
+        with open("how_to_use.txt") as file:
+            instructions = file.read()
 
+        self.frame = ui.CTkFrame(self)
+        self.frame.pack(side = "top", pady = 10, fill = "x")
+
+        self.info_label_ = ui.CTkTextbox(self.frame, height = 500, activate_scrollbars=False)
+        self.info_label_.insert(0.0, instructions)
+        self.info_label_.pack(side = "left", expand = True, fill = "x")
+        self.info_label_.configure(state="disabled", font=("TimesNewRoman", 20), fg_color=['gray92', 'gray14'])
+
+        self.go_to_wiki = ui.CTkButton(self, text = "Visit:en.wikipedia.org/wiki/Caesar_cipher")
+        self.go_to_wiki.configure(command = self._visit_wiki)
+        self.go_to_wiki.pack(pady = 20)
+
+    def _visit_wiki(self):
+        self.go_to_wiki.configure(fg_color = "limegreen")
+        webbrowser.open("en.wikipedia.org/wiki/Caesar_cipher")
 
 
 
 class App(ui.CTk):
     button_padding_y = 10  # vertical
     button_padding_x = 15  # horizontal
-
+    font_size = 15
 
     def __init__(self):
         super().__init__()
