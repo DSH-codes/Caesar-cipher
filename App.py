@@ -107,6 +107,9 @@ class App(ui.CTk):
 
         text = fcs.import_text()
 
+        if not text:
+            return
+
         self._clear_textboxes()
 
         self.original_textbox.insert(0.0, text)

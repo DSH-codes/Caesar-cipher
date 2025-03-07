@@ -29,7 +29,7 @@
 
 * Save as
 
-* Abort text importing error
+* Abort text importing error ✓
 
 
 
