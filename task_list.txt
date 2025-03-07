@@ -33,11 +33,13 @@
 
 * Help button
 
-* Help button's position
+* Help button's position ✓
 
 * Calculate the main window's position
 
 * Formula of the window's positioning
+
+* Default names for files ✓
 
 
 

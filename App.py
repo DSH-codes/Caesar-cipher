@@ -4,9 +4,11 @@ import customtkinter as ui
 
 import functions as fcs
 
-from tkinter import messagebox as mb
+import time as tm
 
 from tkinter import filedialog as fd
+
+
 
 
 
@@ -23,7 +25,7 @@ class HelpWindow(ui.CTkToplevel):
         # set the help window, right the next to the main window
 
         self.info_label_ = ui.CTkLabel(self, text = "Hello")
-        self.info_label_.pack()
+        self.info_label_.pack(pady = 10)
 
 
 
@@ -82,7 +84,6 @@ class App(ui.CTk):
 
         # self.optimal_position()
 
-
     def _encode_and_show(self):
         """Gets a text from the upper textbox
         encodes it, the inserts into the textbox
@@ -98,7 +99,6 @@ class App(ui.CTk):
         self.encoded_textbox.configure(state = "normal")
         self.encoded_textbox.insert(0.0, encoded_message)
         self.encoded_textbox.configure(state = "disabled")
-
 
     def _clear_textboxes(self, both = True):
 
@@ -121,7 +121,6 @@ class App(ui.CTk):
 
         self.original_textbox.delete(0.0, "end")
 
-
     def _import_text(self):
         """Takes a text from txt file
         and inserts it into the upper
@@ -136,7 +135,6 @@ class App(ui.CTk):
 
         self.original_textbox.insert(0.0, text)
 
-
     def _save(self):
         """Saves original, encoded or
         both messages as a txt file."""
@@ -149,9 +147,11 @@ class App(ui.CTk):
         encoded_message = self.encoded_textbox.get(0.0, "end")
         encoded_message = "no message was encoded" if encoded_message == "\n" else encoded_message
 
+        file_name = "Secret Message " + str(tm.time()).replace(".", "")
+        s = fd.asksaveasfilename(initialfile=file_name, defaultextension = ".txt", filetypes = [("Text file", "*.txt")])
 
-        s = fd.asksaveasfilename(defaultextension = ".txt", filetypes = [("Text file", "*.txt")])
-
+        if not s:       # if filename was not taken, return
+            return
 
         with open(s, "w") as file:
             file.write(original_message)
