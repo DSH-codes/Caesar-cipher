@@ -89,7 +89,7 @@ def valid_digit(x: str):
         x(str): a value to be checked == %P
     """
 
-    if x.isdigit() or x == "":
+    if x.isdigit() or x == "" or x == "Shift":   # shift is to allow, the widget's placeholder text
         return True
     return False
 

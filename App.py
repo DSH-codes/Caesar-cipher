@@ -12,9 +12,6 @@ from tkinter import filedialog as fd
 
 
 
-
-
-
 # Giving the command value, to widgets, trough configure, is done for readability
 
 
@@ -28,6 +25,9 @@ class HelpWindow(ui.CTkToplevel):
 
         with open("how_to_use.txt") as file:
             instructions = file.read()
+
+        if not instructions:
+            instructions = "Text loading error\n\nPlease visit wikipedia via the link below"
 
         self.frame = ui.CTkFrame(self)
         self.frame.pack(side = "top", pady = 10, fill = "x")
@@ -50,7 +50,7 @@ class HelpWindow(ui.CTkToplevel):
 class App(ui.CTk):
     button_padding_y = 10  # vertical
     button_padding_x = 15  # horizontal
-    font_size = 15
+    font = ("TimesNewRoman", 16)
 
     def __init__(self):
         super().__init__()
@@ -58,18 +58,20 @@ class App(ui.CTk):
         self.resizable(True, True)
         self.title(f"{' ' * 42}CaesarCipher 0.2")
         self.validation_ = (self.register(fcs.valid_digit), "%P")
-        self.central_position()
+        self._central_position()
 
         self.position_vertical = 0
         self.position_horizontal = 0
 
         self.entry = ui.CTkEntry(self, validate = "key", validatecommand = self.validation_)
+        self.entry.configure(placeholder_text = "Shift", placeholder_text_color = "#023C40", text_color = "#023C40")
         self.entry.pack(pady=30)
 
-        self.original_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15)
+        self.original_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, font = self.font)
         self.original_textbox.pack(pady = 1)
 
         self.encoded_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, state ="disabled")
+        self.encoded_textbox.configure(font = self.font)
         self.encoded_textbox.pack(pady = 1)
 
         self.frame_ = ui.CTkFrame(self, fg_color=self.cget("fg_color"), height=150, width=350)
@@ -87,8 +89,13 @@ class App(ui.CTk):
         self.save_as.configure(command = self._save)
         self.save_as.grid(row=1, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
 
-        self.decode = ui.CTkButton(self.frame_, text="Decode")
-        self.decode.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
+        self.font_size_var = ui.StringVar(value = "Font")   # to control font button
+        self.font_size = ui.CTkSegmentedButton(self.frame_, values = ["-", "Font", "+"])
+        self.font_size.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x, sticky ="we")
+        self.font_size.configure(bg_color = ['#3B8ED0', '#1F6AA5'], fg_color = ['#3B8ED0', '#1F6AA5'])
+        self.font_size.configure(unselected_color=['#3B8ED0', '#1F6AA5'], unselected_hover_color="limegreen")
+        self.font_size.configure(variable = self.font_size_var, command = self._change_font_size)
+
 
         self.help = ui.CTkButton(self.frame_, text="Help", command = self._show_help)
         self.help.grid(row=2, column=0, pady=self.button_padding_y, padx=self.button_padding_x)
@@ -98,8 +105,6 @@ class App(ui.CTk):
         self.clear_window.grid(row=2, column=1, pady=self.button_padding_y, padx=self.button_padding_x)
 
         self.help_window: None | ui.CTkToplevel = None
-
-        # self.optimal_position()
 
     def _encode_and_show(self):
         """Gets a text from the upper textbox
@@ -154,7 +159,8 @@ class App(ui.CTk):
 
     def _save(self):
         """Saves original, encoded or
-        both messages as a txt file."""
+        both messages as a txt file
+        under unique new."""
 
         original_message = self.original_textbox.get(0.0, "end")
         original_message = "no message was written\n" if original_message == "\n" else original_message
@@ -171,7 +177,7 @@ class App(ui.CTk):
             return
 
         with open(s, "w") as file:
-            file.write(original_message)
+            file.write(original_message.rstrip() + "\n")    # remove all extra new lines and add only one!
             file.write(f"\n{('-' * 45)}\n\n")
             file.write(encoded_message)
 
@@ -193,10 +199,14 @@ class App(ui.CTk):
         else:
             self.help_window.focus()
 
-    def central_position(self):
+    def _central_position(self):
         """Calculates the main window's dimension and
         then places it precisely into the middle
-        of the screen"""
+        of the screen
+
+        It is like:
+        central horizontal position = (screenwidth - widget_width) // 2
+        """
 
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
@@ -208,9 +218,40 @@ class App(ui.CTk):
         location_vertical = (screen_height - height) // 2
 
 
-        pos = f"{width}x{height}+{location_horizontal}+{location_vertical}"
+        position = f"{width}x{height}+{location_horizontal}+{location_vertical}"
 
-        self.geometry(pos)
+        self.geometry(position)
+
+    def _change_font_size(self, to_do: str):
+        """Changes font size of the text
+        in textboxes, when pressed - or +"""
+
+
+        print(self.font_size_var.get())
+
+        if to_do == "+":
+
+            if self.font[1] == 56:  # font size no more than 56
+                return
+
+            self.font = (self.font[0], self.font[1] + 10)
+            self.original_textbox.configure(font = self.font)
+            self.encoded_textbox.configure(font = self.font)
+            self.font_size_var.set("Font")  # set it back
+
+        else:   # then minus
+
+            if self.font[1] == 6:   # font size no less than 6
+                return
+
+            self.font = (self.font[0], self.font[1] - 10)
+            self.original_textbox.configure(font = self.font)
+            self.encoded_textbox.configure(font = self.font)
+            self.font_size_var.set("Font")  # set it back
+
+
+
+
 
 
 

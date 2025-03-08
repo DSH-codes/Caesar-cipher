@@ -21,11 +21,7 @@
 
 * test ignore ✓
 
-* Backward shift?
-
 * Reset all widget functions into the class? ✓
-
-* Decode?
 
 * Save as ✓
 
@@ -35,11 +31,15 @@
 
 * Help button's position ✓
 
-* Calculate the main window's position
+* Calculate the main window's position ✓
 
-* Formula of the window's positioning
+* Formula of the window's positioning ✓
 
 * Default names for files ✓
+
+* Font size button ✓
+
+* Picture, instead of text, for the help window
 
 
 

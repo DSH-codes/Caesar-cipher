@@ -8,7 +8,7 @@ Step 2:
 
 Enter some text into the upper
 textbox. Only letters will be
-converted, symbols will stays as
+converted, symbols will stay as
 they are. So with default shift
 AAA!? will be BBB!?
 
@@ -22,7 +22,7 @@ be the result.
 
 Additional options:
 
-If you want to import some text 
+If you want to import some text
 from .txt formatted file. Press
 import, choose a file and press
 Open. All convertible text will
@@ -30,8 +30,8 @@ be imported. Then just press the
 Encode button.
 
 If you want to save your secret
-text, press Save as and choose 
-a directory to place it. 
+text, press Save as and choose
+a directory to place it.
 
 User Clear button below, to delete
 contents of the textboxes.
