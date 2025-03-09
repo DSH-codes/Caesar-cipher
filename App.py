@@ -91,6 +91,7 @@ class App(ui.CTk):
 
         self.font_size_var = ui.StringVar(value = "Font")   # to control font button
         self.font_size = ui.CTkSegmentedButton(self.frame_, values = ["-", "Font", "+"])
+        self.font_size.configure(selected_hover_color = ['#3B8ED0', '#1F6AA5'])     # central Font element is to be like disabled, playing a label role. It is selected one, because it is set in the StringVar
         self.font_size.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x, sticky ="we")
         self.font_size.configure(bg_color = ['#3B8ED0', '#1F6AA5'], fg_color = ['#3B8ED0', '#1F6AA5'])
         self.font_size.configure(unselected_color=['#3B8ED0', '#1F6AA5'], unselected_hover_color="limegreen")
