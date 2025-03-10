@@ -55,7 +55,7 @@ class App(ui.CTk):
     def __init__(self):
         super().__init__()
         self.geometry("400x600")
-        self.resizable(True, True)
+        self.resizable(False, False)
         self.title(f"{' ' * 42}CaesarCipher 0.2")
         self.validation_ = (self.register(fcs.valid_digit), "%P")
         self._central_position()
