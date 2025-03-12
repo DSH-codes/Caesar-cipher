@@ -1,4 +1,3 @@
-import tkinter.messagebox
 
 import customtkinter as ui
 
@@ -10,9 +9,12 @@ import time as tm
 
 from tkinter import filedialog as fd
 
+from PIL import Image
 
 
-# Giving the command value, to widgets, trough configure, is done for readability
+
+
+# Giving the command value, to widgets, trough the configure, is done for readability
 
 
 
@@ -23,23 +25,24 @@ class HelpWindow(ui.CTkToplevel):
         self.geometry(f"400x600+{lc_horizontal+400}+{lc_vertical}")
         # set the help window, right the next to the main window
 
-        with open("how_to_use.txt") as file:
-            instructions = file.read()
 
-        if not instructions:
-            instructions = "Text loading error\n\nPlease visit wikipedia via the link below"
+        self.scroll = ui.CTkScrollableFrame(self, height = 600, fg_color = ['#F9F9FA', '#1D1E1E'])
+        self.scroll.pack(fill="x")
 
-        self.frame = ui.CTkFrame(self)
-        self.frame.pack(side = "top", pady = 10, fill = "x")
+        images = ["Element_1.png", "Element_2.png", "Element_3.png", "Element_4.png"]
 
-        self.info_label_ = ui.CTkTextbox(self.frame, height = 500, activate_scrollbars=False)
-        self.info_label_.insert(0.0, instructions)
-        self.info_label_.pack(side = "left", expand = True, fill = "x")
-        self.info_label_.configure(state="disabled", font=("TimesNewRoman", 20), fg_color=['gray92', 'gray14'])
+        # im = Image.open("help_images\\Element_1.png")
+        # im = ui.CTkImage(im, size = (380, 600))
 
-        self.go_to_wiki = ui.CTkButton(self, text = "Visit:en.wikipedia.org/wiki/Caesar_cipher")
+        for i in images:
+            im = Image.open("help_images\\" + i)
+            im = ui.CTkImage(im, size = (380, 600))
+            ui.CTkLabel(self.scroll, image = im).pack(pady = 5)
+
+        self.go_to_wiki = ui.CTkButton(self.scroll, text = "Visit:en.wikipedia.org/wiki/Caesar_cipher")
         self.go_to_wiki.configure(command = self._visit_wiki)
-        self.go_to_wiki.pack(pady = 20)
+        self.go_to_wiki.pack(pady = 10, fill = "x")
+
 
     def _visit_wiki(self):
         self.go_to_wiki.configure(fg_color = "limegreen")
@@ -68,6 +71,7 @@ class App(ui.CTk):
         self.entry.pack(pady=30)
 
         self.original_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, font = self.font)
+        self.original_textbox.configure(font = self.font)
         self.original_textbox.pack(pady = 1)
 
         self.encoded_textbox = ui.CTkTextbox(self, width=350, height=180, corner_radius=15, state ="disabled")
@@ -91,7 +95,7 @@ class App(ui.CTk):
 
         self.font_size_var = ui.StringVar(value = "Font")   # to control font button
         self.font_size = ui.CTkSegmentedButton(self.frame_, values = ["-", "Font", "+"])
-        self.font_size.configure(selected_hover_color = ['#3B8ED0', '#1F6AA5'])     # central Font element is to be like disabled, playing a label role. It is selected one, because it is set in the StringVar
+        self.font_size.configure(selected_hover_color = ['#3B8ED0', '#1F6AA5'])     # central Font element is to be like disabled, playing a label role. It is the selected one, because it is set in the StringVar
         self.font_size.grid(row=1, column=1, pady=self.button_padding_y, padx=self.button_padding_x, sticky ="we")
         self.font_size.configure(bg_color = ['#3B8ED0', '#1F6AA5'], fg_color = ['#3B8ED0', '#1F6AA5'])
         self.font_size.configure(unselected_color=['#3B8ED0', '#1F6AA5'], unselected_hover_color="limegreen")
@@ -249,27 +253,6 @@ class App(ui.CTk):
             self.original_textbox.configure(font = self.font)
             self.encoded_textbox.configure(font = self.font)
             self.font_size_var.set("Font")  # set it back
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

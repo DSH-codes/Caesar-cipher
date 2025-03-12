@@ -1,17 +1,9 @@
- 
 
-
-
-
-* Basic windows ✓
+* Basic window ✓
 
 * Wide - short window? ✓
 
 * Validation for the top entry ✓
-
-* Background vector pic
-
-* 0.2 when basic UI is ready ✓
 
 * Second text window for encoding ✓
 
@@ -21,9 +13,9 @@
 
 * test ignore ✓
 
-* Reset all widget functions into the class? ✓
+* Reset all widget functions into the class! ✓
 
-* Save as ✓
+* Save as button ✓
 
 * Abort text importing error ✓
 
@@ -39,18 +31,9 @@
 
 * Font size button ✓
 
-* Picture, instead of text, for the help window
+* Pictures, instead of text, for the help window ✓
 
+* Icon for the window
 
+* Standalone variant
 
-
-
-
-
-
-
-
-
-NOTES:
-
-# ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
