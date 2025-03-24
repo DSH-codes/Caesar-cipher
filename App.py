@@ -14,26 +14,27 @@ from PIL import Image
 
 
 
+
+
 # Giving the command value, to widgets, trough the configure, is done for readability
 
 
 
 class HelpWindow(ui.CTkToplevel):
+    """
+    A Top-level window with the help information
+    """
     def __init__(self, lc_horizontal, lc_vertical):
         super().__init__()
         self.title("How to use")
-        self.geometry(f"400x600+{lc_horizontal+400}+{lc_vertical}")
-        # set the help window, right the next to the main window
-
+        self.geometry(f"400x600+{lc_horizontal+400}+{lc_vertical}")   # set the help window, right the next to the main window
 
         self.scroll = ui.CTkScrollableFrame(self, height = 600, fg_color = ['#F9F9FA', '#1D1E1E'])
         self.scroll.pack(fill="x")
 
         images = ["Element_1.png", "Element_2.png", "Element_3.png", "Element_4.png"]
 
-        # im = Image.open("help_images\\Element_1.png")
-        # im = ui.CTkImage(im, size = (380, 600))
-
+        # add every help_picture into the window
         for i in images:
             im = Image.open("help_images\\" + i)
             im = ui.CTkImage(im, size = (380, 600))
@@ -45,6 +46,7 @@ class HelpWindow(ui.CTkToplevel):
 
 
     def _visit_wiki(self):
+        """Open Wikipedia page via the browser"""
         self.go_to_wiki.configure(fg_color = "limegreen")
         webbrowser.open("en.wikipedia.org/wiki/Caesar_cipher")
 
@@ -62,6 +64,8 @@ class App(ui.CTk):
         self.title(f"{' ' * 42}CaesarCipher 0.2")
         self.validation_ = (self.register(fcs.valid_digit), "%P")
         self._central_position()
+        self.wm_iconbitmap("icon.ico")  # the icon is by Gravizio from Flaticon
+
 
         self.position_vertical = 0
         self.position_horizontal = 0

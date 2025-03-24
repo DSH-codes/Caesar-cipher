@@ -33,7 +33,9 @@
 
 * Pictures, instead of text, for the help window ✓
 
-* Icon for the window
+* Icon for the window ✓
 
-* Standalone variant
+* Standalone variant with an icon
+
+* Mention Gravizio from Flaticon
 
